@@ -48,17 +48,73 @@ class View():
     def __init__(self, root):
 
         # TODO switch view fcn
-        self.home_view = self.init_home_view(root)
-        self.home_view.grid(row = 0,column = 0) 
 
-        self.t3_view = self.init_t3_view(root)
-        self.t4_view = self.init_t4_view(root)
-        self.t4a_view = self.init_t4a_view(root)
-        self.t4e_view = self.init_t4e_view(root)
-        self.t5_view = self.init_t5_view(root)
-        self.t2202_view = self.init_t2202_view(root)
-        
-        self.home_view.grid(row=0,column=0)
+        self.views = dict.fromkeys(["home", "t3", "t4", "t4a", "t4e", "t5", "t2202"])
+
+        self.views["t3"] = self.init_t3_view(root)
+
+        self.views["t4"] = self.init_t4_view(root)
+
+        self.views["t4a"] = self.init_t4a_view(root)
+
+        self.views["t4e"] = self.init_t4e_view(root)
+
+        self.views["t5"] = self.init_t5_view(root)
+
+        self.views["t2202"] = self.init_t2202_view(root)
+
+        self.views["home"] = self.init_home_view(root)
+        self.views["home"].grid(row=0,column=0)
+
+        self.init_menu(root)
+
+    def init_menu(self, root):
+
+        self.main_menu = main_menu = tk.Menu(root)
+
+        self.file_menu = file_menu = tk.Menu(main_menu, tearoff=0)
+
+        self.add_menu = add_menu = tk.Menu(file_menu, tearoff=0)
+        add_menu.add_command(label="Add T3 slip", command=lambda:self.switch_view('t3'))
+        add_menu.add_command(label="Add T4 slip", command=lambda:self.switch_view('t4'))
+        add_menu.add_command(label="Add T4A slip", command=lambda:self.switch_view('t4a'))
+        add_menu.add_command(label="Add T4E slip", command=lambda:self.switch_view('t4e'))
+        add_menu.add_command(label="Add T5 slip", command=lambda:self.switch_view('t5'))
+        add_menu.add_command(label="Add T2202 slip", command=lambda:self.switch_view('t2202'))
+        file_menu.add_cascade(label="Add tax slip", menu=add_menu)
+
+        file_menu.add_command(label="View tax slips", state='disabled')
+        file_menu.add_command(label="Calculate return", state='disabled')
+        file_menu.add_command(label="Quit", command=lambda:root.quit())
+
+        self.options_menu = options_menu = tk.Menu(main_menu, tearoff=0)
+
+        self.themes_menu = themes_menu = tk.Menu(options_menu, tearoff=0)
+        themes_menu.add_radiobutton(label="Light", value=1)
+        themes_menu.add_radiobutton(label="Dark", state='disabled')
+        options_menu.add_cascade(label="Change Themes", menu=themes_menu)
+
+        self.fontfamily_menu = fontfamily_menu = tk.Menu(options_menu, tearoff=0)
+        fontfamily_menu.add_radiobutton(label="Times New Roman")
+        fontfamily_menu.add_radiobutton(label="Arial", state='disabled')
+        fontfamily_menu.add_radiobutton(label="Calibri", state='disabled')
+        options_menu.add_cascade(label="Change Font Family", menu=fontfamily_menu)
+
+        self.fontsize_menu = fontsize_menu = tk.Menu(options_menu, tearoff=0)
+        fontsize_menu.add_radiobutton(label="S")
+        fontsize_menu.add_radiobutton(label="M", state='disabled')
+        fontsize_menu.add_radiobutton(label="L", state='disabled')
+        options_menu.add_cascade(label="Change Font Size", menu=fontsize_menu)
+
+        self.help_menu = help_menu = tk.Menu(main_menu, tearoff=0)
+        help_menu.add_command(label="About", state='disabled')
+        help_menu.add_command(label="Instructions", state='disabled')
+
+        main_menu.add_cascade(label="File", menu=file_menu)
+        main_menu.add_cascade(label="Options", menu=options_menu)
+        main_menu.add_cascade(label="Help", menu=help_menu)
+
+        root.config(menu=main_menu)
 
     def init_home_view(self, root):
 
@@ -261,3 +317,10 @@ class View():
         box_frame.grid(row=1, column=0)
 
         return view
+
+    def switch_view(self, new_view):
+
+        for view in self.views:
+            self.views[view].grid_forget()
+
+        self.views[new_view].grid(row=0, column=0)
