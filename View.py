@@ -45,6 +45,7 @@ class StrEntry(tk.Entry):
 
 class View():
 
+
     def __init__(self, root):
 
         # TODO switch view fcn
@@ -53,7 +54,8 @@ class View():
 
         self.t4_view = self.init_t4_view(root)
         self.t4a_view = self.init_t4a_view(root)
-        self.t4a_view.grid(row = 0,column = 0)
+        self.t4e_view = self.init_t4e_view(root)
+
 
     def init_home_view(self, root):
 
@@ -63,6 +65,7 @@ class View():
         tk.Button(view, text = "Get Started").grid(row = 3, column = 0)
 
         return view
+
 
     def init_t4_view(self, root):
 
@@ -94,6 +97,7 @@ class View():
 
         return view
 
+
     def init_t4a_view(self, root):
 
         view = tk.Frame(root)
@@ -104,6 +108,35 @@ class View():
         tk.Label(title_frame, text = "T4A: Statement Of Pension, Retirement, Annuity And Other Income").grid(row = 0, column = 0, columnspan = 8)
         tk.Label(title_frame, text = "Name of payer").grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
+
+        i = 0
+        box_frame = tk.Frame(view)
+        for box in boxes:
+
+            boxes[box] = []
+            
+            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(FloatEntry(box_frame))
+
+            boxes[box][0].grid(row = i // 8, column = i % 8)
+            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+
+            i += 2
+
+        title_frame.grid(row=0, column=0)
+        box_frame.grid(row=1, column=0)
+
+        return view
+    
+
+    def init_t4e_view(self, root):
+
+        view = tk.Frame(root)
+
+        boxes = dict.fromkeys([7, 14, 15, 17, 20, 21, 22, 23])
+
+        title_frame = tk.Frame(view)
+        tk.Label(title_frame, text = "T4: Statement of Employment Insurance").grid(row = 0, column = 0, columnspan = 8)
 
         i = 0
         box_frame = tk.Frame(view)
