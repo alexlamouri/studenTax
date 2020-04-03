@@ -49,21 +49,17 @@ class View():
 
         # TODO switch view fcn
 
-        self.views = dict.fromkeys(["home", "t3", "t4", "t4a", "t4e", "t5", "t2202"])
-
-        self.views["t3"] = self.init_t3_view(root)
-
-        self.views["t4"] = self.init_t4_view(root)
-
-        self.views["t4a"] = self.init_t4a_view(root)
-
-        self.views["t4e"] = self.init_t4e_view(root)
-
-        self.views["t5"] = self.init_t5_view(root)
-
-        self.views["t2202"] = self.init_t2202_view(root)
+        self.views = dict.fromkeys(["home", "list", "t3", "t4", "t4a", "t4e", "t5", "t2202"])
 
         self.views["home"] = self.init_home_view(root)
+        self.views["list"] = self.init_list_view(root)
+        self.views["t3"] = self.init_t3_view(root)
+        self.views["t4"] = self.init_t4_view(root)
+        self.views["t4a"] = self.init_t4a_view(root)
+        self.views["t4e"] = self.init_t4e_view(root)
+        self.views["t5"] = self.init_t5_view(root)
+        self.views["t2202"] = self.init_t2202_view(root)
+
         self.views["home"].grid(row=0,column=0)
 
         self.init_menu(root)
@@ -83,7 +79,7 @@ class View():
         add_menu.add_command(label="Add T2202 slip", command=lambda:self.switch_view('t2202'))
         file_menu.add_cascade(label="Add tax slip", menu=add_menu)
 
-        file_menu.add_command(label="View tax slips", state='disabled')
+        file_menu.add_command(label="View tax slips", command=lambda:self.switch_view('list'))
         file_menu.add_command(label="Calculate return", state='disabled')
         file_menu.add_command(label="Quit", command=lambda:root.quit())
 
@@ -315,6 +311,22 @@ class View():
 
         title_frame.grid(row=0, column=0)
         box_frame.grid(row=1, column=0)
+
+        return view
+
+    def init_list_view(self, root):
+
+        view = tk.Frame(root)
+
+        treeview = ttk.Treeview(view, columns=['slip', 'name'], selectmode='browse')
+        treeview.heading('#0', text='')
+        treeview.heading('slip', text='Tax Slip')
+        treeview.heading('name', text='Name')
+        treeview.grid(row=0,column=0)
+
+        scrollbar = ttk.Scrollbar(view, orient=tk.VERTICAL, command=treeview.yview)
+        treeview.configure(yscrollcommand=scrollbar.set) 
+        scrollbar.grid(row=0, column=1, sticky='NSW')
 
         return view
 
