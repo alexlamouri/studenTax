@@ -56,7 +56,8 @@ class View():
         self.t4a_view = self.init_t4a_view(root)
         self.t4e_view = self.init_t4e_view(root)
         self.t5_view = self.init_t5_view(root)
-
+        self.t2202_view = self.init_t2202_view(root)
+        
         self.home_view.grid(row=0,column=0)
 
     def init_home_view(self, root):
@@ -85,7 +86,7 @@ class View():
 
             boxes[box] = []
             
-            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(tk.Label(box_frame, text = box))
             boxes[box].append(FloatEntry(box_frame))
 
             boxes[box][0].grid(row = i // 8, column = i % 8)
@@ -115,7 +116,7 @@ class View():
 
             boxes[box] = []
             
-            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(tk.Label(box_frame, text = box))
             boxes[box].append(FloatEntry(box_frame))
 
             boxes[box][0].grid(row = i // 8, column = i % 8)
@@ -145,7 +146,7 @@ class View():
 
             boxes[box] = []
             
-            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(tk.Label(box_frame, text = box))
             boxes[box].append(FloatEntry(box_frame))
 
             boxes[box][0].grid(row = i // 8, column = i % 8)
@@ -173,7 +174,7 @@ class View():
 
             boxes[box] = []
             
-            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(tk.Label(box_frame, text = box))
             boxes[box].append(FloatEntry(box_frame))
 
             boxes[box][0].grid(row = i // 8, column = i % 8)
@@ -207,13 +208,54 @@ class View():
 
             boxes[box] = []
             
-            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(tk.Label(box_frame, text = box))
             boxes[box].append(FloatEntry(box_frame))
 
             boxes[box][0].grid(row = i // 8, column = i % 8)
             boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
 
             i += 2
+
+        title_frame.grid(row=0, column=0)
+        box_frame.grid(row=1, column=0)
+
+        return view
+    
+    def init_t2202_view(self, root):
+
+        view = tk.Frame(root)
+
+        title_frame = tk.Frame(view)
+        tk.Label(title_frame, text = "T2202: Tuition and Enrolment Certificate").grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "Institution name").grid(row = 1, column = 0, columnspan = 4)
+        StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
+
+        box_frame = tk.Frame(view)
+        boxes = {}
+
+        boxes["program"] = []
+        boxes["program"].append(tk.Label(box_frame, text = "Program name"))
+        boxes["program"].append(FloatEntry(box_frame))
+        boxes["program"][0].grid(row = 0, column = 0)
+        boxes["program"][1].grid(row = 1, column= 0)
+
+        boxes["fees"] = []
+        boxes["fees"].append(tk.Label(box_frame, text = "Program name"))
+        boxes["fees"].append(FloatEntry(box_frame))
+        boxes["fees"][0].grid(row = 0, column = 1)
+        boxes["fees"][1].grid(row = 1, column= 1)
+
+        boxes["pt"] = []
+        boxes["pt"].append(tk.Label(box_frame, text = "Program name"))
+        boxes["pt"].append(FloatEntry(box_frame))
+        boxes["pt"][0].grid(row = 0, column = 2)
+        boxes["pt"][1].grid(row = 1, column= 2)
+
+        boxes["ft"] = []
+        boxes["ft"].append(tk.Label(box_frame, text = "Program name"))
+        boxes["ft"].append(FloatEntry(box_frame))
+        boxes["ft"][0].grid(row = 0, column = 3)
+        boxes["ft"][1].grid(row = 1, column= 3)
 
         title_frame.grid(row=0, column=0)
         box_frame.grid(row=1, column=0)
