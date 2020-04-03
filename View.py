@@ -45,19 +45,19 @@ class StrEntry(tk.Entry):
 
 class View():
 
-
     def __init__(self, root):
 
         # TODO switch view fcn
         self.home_view = self.init_home_view(root)
         self.home_view.grid(row = 0,column = 0) 
 
+        self.t3_view = self.init_t3_view(root)
         self.t4_view = self.init_t4_view(root)
         self.t4a_view = self.init_t4a_view(root)
         self.t4e_view = self.init_t4e_view(root)
+        self.t5_view = self.init_t5_view(root)
 
-        self.t4e_view.grid(row=0,column=0)
-
+        self.home_view.grid(row=0,column=0)
 
     def init_home_view(self, root):
 
@@ -68,6 +68,35 @@ class View():
 
         return view
 
+    def init_t3_view(self, root):
+
+        view = tk.Frame(root)
+
+        boxes = dict.fromkeys([49, 50, 51, 21, 30, 23, 32, 39, 26, 48])
+
+        title_frame = tk.Frame(view)
+        tk.Label(title_frame, text = "T3: Statement of Trust Income Allocations and Designations").grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "Trust's name").grid(row = 1, column = 0, columnspan = 4)
+        StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
+
+        i = 0
+        box_frame = tk.Frame(view)
+        for box in boxes:
+
+            boxes[box] = []
+            
+            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(FloatEntry(box_frame))
+
+            boxes[box][0].grid(row = i // 8, column = i % 8)
+            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+
+            i += 2
+
+        title_frame.grid(row=0, column=0)
+        box_frame.grid(row=1, column=0)
+
+        return view
 
     def init_t4_view(self, root):
 
@@ -99,7 +128,6 @@ class View():
 
         return view
 
-
     def init_t4a_view(self, root):
 
         view = tk.Frame(root)
@@ -129,7 +157,6 @@ class View():
         box_frame.grid(row=1, column=0)
 
         return view
-    
 
     def init_t4e_view(self, root):
 
@@ -159,17 +186,20 @@ class View():
 
         return view
 
-
-    def init_t3_view(self, root):
+    def init_t5_view(self, root):
 
         view = tk.Frame(root)
 
-        boxes = dict.fromkeys([49, 50, 51, 21, 30, 23, 32, 39, 26, 48])
+        boxes = dict.fromkeys([24, 25, 26, 13, 18, 10, 11, 12])
 
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T3: Statement of Trust Income Allocations and Designations").grid(row = 0, column = 0, columnspan = 8)
-        tk.Label(title_frame, text = "Trust's name").grid(row = 1, column = 0, columnspan = 4)
+        tk.Label(title_frame, text = "T5: Statement of Investment Income").grid(row = 0, column = 0, columnspan = 8)
+        
+        tk.Label(title_frame, text = "Name of payer").grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
+
+        tk.Label(title_frame, text = "Exchange rate").grid(row = 2, column = 0, columnspan = 4)
+        FloatEntry(title_frame).grid(row = 2, column = 4, columnspan = 8)
 
         i = 0
         box_frame = tk.Frame(view)
