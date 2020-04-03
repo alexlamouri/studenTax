@@ -52,7 +52,9 @@ class View():
         self.home_view.grid(row = 0,column = 0) 
 
         self.t4_view = self.init_t4_view(root)
-        self.t4_view.grid(row = 0,column = 0)
+        self.t4e_view = self.init_t4e_view(root)
+        
+        self.t4e_view.grid(row = 0,column = 0)
 
     def init_home_view(self, root):
 
@@ -73,6 +75,34 @@ class View():
         tk.Label(title_frame, text = "T4: Statement of Remuneration Paid").grid(row = 0, column = 0, columnspan = 8)
         tk.Label(title_frame, text = "Employer's Name").grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
+
+        i = 0
+        box_frame = tk.Frame(view)
+        for box in boxes:
+
+            boxes[box] = []
+            
+            boxes[box].append(tk.Label(box_frame, text=box))
+            boxes[box].append(FloatEntry(box_frame))
+
+            boxes[box][0].grid(row = i // 8, column = i % 8)
+            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+
+            i += 2
+
+        title_frame.grid(row=0, column=0)
+        box_frame.grid(row=1, column=0)
+
+        return view
+
+    def init_t4e_view(self, root):
+
+        view = tk.Frame(root)
+
+        boxes = dict.fromkeys([7, 14, 15, 17, 20, 21, 22, 23])
+
+        title_frame = tk.Frame(view)
+        tk.Label(title_frame, text = "T4: Statement of Employment Insurance").grid(row = 0, column = 0, columnspan = 8)
 
         i = 0
         box_frame = tk.Frame(view)
