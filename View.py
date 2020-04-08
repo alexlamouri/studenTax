@@ -118,7 +118,7 @@ class View():
     def init_home_view(self, root):
 
         view = tk.Frame(root, width = 500, height = 500)
-        root.geometry("500x500")
+        root.geometry("650x500")
         root.columnconfigure(0, weight=1)
         root.rowconfigure(0, weight=1)
         
@@ -193,7 +193,7 @@ class View():
 
         action_frame = tk.Frame(view)
         tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes)), font=("Helvetica", 15)).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -230,7 +230,7 @@ class View():
 
         action_frame = tk.Frame(view)
         tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes)), font=("Helvetica", 15)).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -266,7 +266,7 @@ class View():
 
         action_frame = tk.Frame(view)
         tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes)), font=("Helvetica", 15)).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -308,7 +308,7 @@ class View():
 
         action_frame = tk.Frame(view)
         tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes)), font=("Helvetica", 15)).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
