@@ -14,12 +14,14 @@ class CSVModel():
         self.line_11400 = self.tax_slips['T4A'][20]
         self.line_11410 = self.tax_slips['T4A'][16]
         self.line_11900 = self.tax_slips['T4E'][14]
+        
 
         self.line_15000 = self.line_10100 + self.line_11300 + self.line_11400 + self.line_11410 + self.line_11900
 
         total_income = self.line_15000
+        employment_income = self.line_10100
 
-        return total_income
+        return (employment_income, total_income)
 
     def calculate_net_income(self,total_income):
         self.line_44 = self.tax_slips['T4'][44]
@@ -43,6 +45,7 @@ class CSVModel():
         self.line_31 = self.line_30 * 0.015
         self.line_32 = self.line_30 * self.line_31
         self.line_34 = self.line_32
+        self.line_35000 = self.line_34
 
         self.line_35 = self.line_26000
         self.line_36 = self.line_35
@@ -96,6 +99,7 @@ class CSVModel():
         self.line_48 = 0
         self.line_49 = self.line_46
         self.line_50 = self.line_45 - self.line_49
+        
         if self.line_50 < 0:
             self.line_50 = 0
             
@@ -105,12 +109,16 @@ class CSVModel():
         self.line_61 = self.line_58
 
         net_federal_tax = self.line_61
+        basic_person_amount = self.line_30000
+        total_payable = self.line_35000
         
-        return net_federal_tax
+        
+        return basic_person_amount, total_payable
 
     def calculate_refund_balance_owing(self):
         self.line_42000 = self.line_61
         self.line_43500 = self.line_42000
+        
         total_payable = self.line_43500
         self.line_48200 = 0
         

@@ -23,10 +23,14 @@ class Controller():
 
         self.view.views[new_view].grid(row=0, column=0)
 
+    def clear(self, boxes):
+        for box in boxes:
+            boxes[box][1].delete(0,'end')
+
     def submit(self, values):
         data = {}
         tax_slip = values[0]
-        # print(tax_slip)
+        
         boxes = values[1]
         for line in boxes:
             value = boxes[line][1].get()
@@ -37,35 +41,46 @@ class Controller():
         self.model.save_tax_slip(data,tax_slip)
         
 
-    def total_income(self):
-        self.total_income = self.model.calculate_total_income()
-        return self.total_income
+    def calculate_total_income(self):
+      #  self.employment_income, self.total_income = self.model.calculate_total_income()
+        return self.model.calculate_total_income()
 
-    def net_income(self):
-        self.net_income = self.model.calculate_net_income(self.total_income)
-        return self.net_income
+    def calculate_net_income(self):
+        #self.net_income = self.model.calculate_net_income(self.total_income)
+        return self.model.calculate_net_income(self.total_income)
 
-    def taxable_income(self):
+    def calculate_taxable_income(self):
         return self.net_income 
 
-    def federal_tax(self):
-        self.net_federal_tax = self.model.calculate_federal_tax()
-        return self.net_federal_tax
+    def calculate_federal_tax(self):
+       # self.basic_personal_amount, self.total_payable, self.net_federal_tax = self.model.calculate_federal_tax()
+        return self.model.calculate_federal_tax()
 
-    def balance_owing(self):
-        self.refund_balance = self.model.calculate_refund_balance_owing()
-        return self.refund_balance
+    def calculate_balance_owing(self):
+       # self.refund_balance = self.model.calculate_refund_balance_owing()
+        return self.model.calculate_refund_balance_owing()
 
     def calculate_return(self):
-        self.total_income()
-        self.net_income()
-        self.taxable_income()
-        self.federal_tax()
-        self.balance_owing()
-        print(self.total_income)
-        print(self.net_income)
-        print(self.net_federal_tax)
-        print(self.refund_balance)
+        
+        employment_income, total_income = self.calculate_total_income()
+        net_income = self.calculate_net_income()
+        basic_personal_amount, total_payable = self.calculate_federal_tax()
+        refund_balance = self.calculate_balance_owing()
+        if refund_balance < 0:
+            value = 'Refund'
+        else:
+            value = 'Balance Credit' 
+        
+        
+        data = {'Employment Income' : employment_income, 'Employment Insurance': '-', 'Total Income': total_income,
+         'Net Income': net_income, 'Basic Personal Amount': basic_personal_amount, 'Total Payable': total_payable,
+         'Total Refundable Credits': '-', value: refund_balance}
+
+        return data
+        
+        
+        
+        
         
         
     

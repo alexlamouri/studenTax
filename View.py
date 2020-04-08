@@ -150,7 +150,7 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
         tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T3',boxes))).grid(row=0, column=4, columnspan=4)
 
 
@@ -188,7 +188,7 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
         tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes))).grid(row=0, column=4, columnspan=4)
 
 
@@ -226,7 +226,7 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
         tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4A',boxes))).grid(row=0, column=4, columnspan=4)
 
 
@@ -262,7 +262,7 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
         tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4E',boxes))).grid(row=0, column=4, columnspan=4)
 
 
@@ -304,7 +304,7 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
         tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T5',boxes))).grid(row=0, column=4, columnspan=4)
 
 
@@ -354,7 +354,7 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
         tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T2202',boxes))).grid(row=0, column=4, columnspan=4)
 
 
@@ -383,6 +383,7 @@ class View():
         return view
 
     def init_calculate_return_view(self, root):
+        data = self.control.calculate_return()
 
         view = tk.Frame(root)
 
@@ -391,11 +392,11 @@ class View():
         
         box_frame = tk.Frame(view)
         boxes = dict.fromkeys([10100, 11900, 15000, 23600, 30000, 35000, 48200])
-        i = 0
+        
         for box in boxes:
             boxes[box] = []
             boxes[box].append(tk.Label(box_frame, text = box))
-            boxes[box].append(FloatEntry(box_frame))
+            boxes[box].append(tk.Label(box_frame, text = data
 
             boxes[box][0].grid(row = i // 8, column = i % 8)
             boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
