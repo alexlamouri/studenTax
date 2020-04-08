@@ -50,7 +50,7 @@ class View():
         self.controller = controller
 
         # init views
-        self.views = dict.fromkeys(["home", "list", "t3", "t4", "t4a", "t4e", "t5", "t2202"])
+        self.views = dict.fromkeys(["home", "list", "t3", "t4", "t4a", "t4e", "t5", "t2202", "calculate_return"])
         self.views["home"] = self.init_home_view(root)
         self.views["list"] = self.init_list_view(root)
         self.views["t3"] = self.init_t3_view(root)
@@ -59,6 +59,7 @@ class View():
         self.views["t4e"] = self.init_t4e_view(root)
         self.views["t5"] = self.init_t5_view(root)
         self.views["t2202"] = self.init_t2202_view(root)
+        self.views["calculate_return"] = self.init_calculate_return_view(root)
 
         self.views["home"].grid(row=0, column=0)
 
@@ -81,7 +82,7 @@ class View():
         file_menu.add_cascade(label="Add tax slip", menu=add_menu)
 
         file_menu.add_command(label="View tax slips", command=lambda:self.controller.switch_view('list'))
-        file_menu.add_command(label="Calculate return", state='disabled')
+        file_menu.add_command(label="Calculate return", command=lambda:self.controller.switch_view('calculate_return'))
         file_menu.add_command(label="Quit", command=lambda:root.quit())
 
         self.options_menu = options_menu = tk.Menu(main_menu, tearoff=0)
@@ -149,8 +150,8 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit").grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T3',boxes))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -187,8 +188,8 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit").grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -225,8 +226,8 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit").grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4A',boxes))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -261,8 +262,8 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit").grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4E',boxes))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -303,8 +304,8 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit").grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T5',boxes))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -353,8 +354,8 @@ class View():
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear").grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit").grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T2202',boxes))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -363,6 +364,7 @@ class View():
 
 
         return view
+
 
     def init_list_view(self, root):
 
@@ -379,3 +381,66 @@ class View():
         scrollbar.grid(row=0, column=1, sticky='NSW')
 
         return view
+
+    def init_calculate_return_view(self, root):
+        eI = tk.StringVar()
+        eIn = tk.StringVar()
+        totIn = tk.StringVar()
+        netIn = tk.StringVar()
+        bpa = tk.StringVar()
+        tP = tk.StringVar()
+        tRC = tk.StringVar()
+        r = tk.StringVar()
+        self.data = [eI, eIn, totIn, netIn, bpa, tP, tRC, r] 
+
+        view = tk.Frame(root)
+
+        title_frame = tk.Frame(view)
+        tk.Label(title_frame, text = "Calculate Return/Balance Owing").grid(row = 0, column = 0, columnspan=8)
+        
+        box_frame = tk.Frame(view)
+        boxes = dict.fromkeys([10100, 11900, 15000, 23600, 30000, 35000, 48200, 48400])
+        labels = ['Employment Income', 'Employment Insurance', 'Total Income', 'Net Income',
+                  'Basic Personal Amount', 'Total Payable', 'Total Refundable Credits', 'Refund']
+
+        i = 0
+        j = 0 
+        
+        for box in boxes:
+            boxes[box] = []
+            boxes[box].append(tk.Label(box_frame, text = box))
+            boxes[box].append(tk.Label(box_frame, text = labels[j]))
+            boxes[box].append(tk.Label(box_frame, textvariable = self.data[j]))
+            
+
+            boxes[box][0].grid(row = i, column = 0)
+            boxes[box][1].grid(row = i , column= 1)
+            boxes[box][2].grid(row = i, column = 2)
+
+            j += 1
+
+            i += 1
+
+        action_frame = tk.Frame(view)
+        tk.Button(action_frame, text = "Calculate Returns", command = self.get_returns).grid(row= 10, column = 0, columnspan = 4)
+        tk.Button(action_frame, text = "View my tax documents").grid(row = 10, column = 5, columnspan=4)
+        tk.Button(action_frame, text = "Export to csv").grid(row=10, column = 10, columnspan=4)
+
+        title_frame.grid(row=0, column=0)
+        box_frame.grid(row=1, column=0)
+        action_frame.grid(row=2, column=0)
+        
+
+        return view
+
+    def get_returns(self):
+        all_data = self.controller.calculate_return()
+
+        j = 0 
+        for line in self.data:
+            line.set(all_data[j])
+            j+= 1
+        
+        
+
+    
