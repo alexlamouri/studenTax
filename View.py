@@ -1,6 +1,6 @@
+from tkinter import *
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import filedialog, messagebox
 
 class FloatEntry(tk.Entry):
 
@@ -95,8 +95,8 @@ class View():
 
         self.fontfamily_menu = fontfamily_menu = tk.Menu(options_menu, tearoff=0)
         fontfamily_menu.add_radiobutton(label="Times New Roman")
-        fontfamily_menu.add_radiobutton(label="Arial", state='disabled')
-        fontfamily_menu.add_radiobutton(label="Calibri", state='disabled')
+        fontfamily_menu.add_radiobutton(label="Arial")
+        fontfamily_menu.add_radiobutton(label="Calibri")
         options_menu.add_cascade(label="Change Font Family", menu=fontfamily_menu)
 
         self.fontsize_menu = fontsize_menu = tk.Menu(options_menu, tearoff=0)
@@ -118,9 +118,13 @@ class View():
     def init_home_view(self, root):
 
         view = tk.Frame(root, width = 500, height = 500)
+        root.geometry("500x500")
+        root.columnconfigure(0, weight=1)
+        root.rowconfigure(0, weight=1)
+        
 
-        tk.Label(view, text = "Welcome to StudenTax").grid(row = 0, column  = 0)
-        tk.Button(view, text = "Get Started", command=lambda:self.controller.switch_view('list')).grid(row = 3, column = 0)
+        tk.Label(view, text = "Welcome to StudenTax", fg = 'midnight blue', font=("Helvetica", 16)).grid(row = 0, column  = 0, sticky="nsew")
+        tk.Button(view, text = "Get Started", command=lambda:self.controller.switch_view('list'), fg = 'midnight blue', font=("Helvetica", 16)).grid(row = 3, column = 0)
 
         return view
 
@@ -130,8 +134,8 @@ class View():
 
 
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T3: Statement of Trust Income Allocations and Designations").grid(row = 0, column = 0, columnspan = 8)
-        tk.Label(title_frame, text = "Trust's name").grid(row = 1, column = 0, columnspan = 4)
+        tk.Label(title_frame, text = "T3: Statement of Trust Income Allocations and Designations",font=("Helvetica", 16)).grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "Trust's name",font=("Helvetica", 16)).grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
 
 
@@ -141,13 +145,13 @@ class View():
         for box in boxes:
 
             boxes[box] = []
-            boxes[box].append(tk.Label(box_frame, text = box))
+            boxes[box].append(tk.Label(box_frame, text = box, fg = 'purple', font=("Helvetica", 15)))
             boxes[box].append(FloatEntry(box_frame))
 
-            boxes[box][0].grid(row = i // 8, column = i % 8)
-            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+            boxes[box][0].grid(row = i, column = 0)
+            boxes[box][1].grid(row = i, column= 1)
 
-            i += 2
+            i += 1
 
 
         action_frame = tk.Frame(view)
@@ -166,31 +170,30 @@ class View():
 
         view = tk.Frame(root)
 
-
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T4: Statement of Remuneration Paid").grid(row = 0, column = 0, columnspan = 8)
-        tk.Label(title_frame, text = "Employer's Name").grid(row = 1, column = 0, columnspan = 4)
+        tk.Label(title_frame, text = "T4: Statement of Remuneration Paid", font=("Helvetica", 16)).grid(row = 0, column = 1, columnspan = 12)
+        tk.Label(title_frame, text = "Employer's Name", font=("Helvetica", 16)).grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
 
 
         box_frame = tk.Frame(view)
         boxes = dict.fromkeys([14 , 16, 17, 18, 20, 22, 24, 26, 44, 46, 50, 52, 55, 56])
         i = 0
+        
         for box in boxes:
-
             boxes[box] = []
-            boxes[box].append(tk.Label(box_frame, text = box))
+            boxes[box].append(tk.Label(box_frame, text = box, fg = 'red4', font=("Helvetica", 15)))
             boxes[box].append(FloatEntry(box_frame))
 
-            boxes[box][0].grid(row = i // 8, column = i % 8)
-            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+            boxes[box][0].grid(row = i, column = 0)
+            boxes[box][1].grid(row = i, column= 1)
 
-            i += 2
+            i += 1
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
@@ -206,8 +209,8 @@ class View():
 
 
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T4A: Statement Of Pension, Retirement, Annuity And Other Income").grid(row = 0, column = 0, columnspan = 8)
-        tk.Label(title_frame, text = "Name of payer").grid(row = 1, column = 0, columnspan = 4)
+        tk.Label(title_frame, text = "T4A: Statement Of Pension, Retirement, Annuity And Other Income", font=("Helvetica", 16)).grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "Name of payer", font=("Helvetica", 16)).grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
 
         
@@ -215,25 +218,25 @@ class View():
         boxes = dict.fromkeys([16, 18, 20, 22, 24, 48])
         i = 0
         for box in boxes:
-
             boxes[box] = []
-            boxes[box].append(tk.Label(box_frame, text = box))
+            boxes[box].append(tk.Label(box_frame, text = box, fg = 'chocolate3', font=("Helvetica", 15)))
             boxes[box].append(FloatEntry(box_frame))
 
-            boxes[box][0].grid(row = i // 8, column = i % 8)
-            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+            boxes[box][0].grid(row = i, column = 0)
+            boxes[box][1].grid(row = i, column= 1)
 
-            i += 2
+            i += 1
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4A',boxes))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
         box_frame.grid(row=1, column=0)
         action_frame.grid(row=2, column=0)
+
 
 
         return view
@@ -244,32 +247,32 @@ class View():
 
 
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T4E: Statement of Employment Insurance").grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "T4E: Statement of Employment Insurance", font=("Helvetica", 16)).grid(row = 0, column = 0, columnspan = 8)
 
         
         box_frame = tk.Frame(view)
         boxes = dict.fromkeys([7, 14, 15, 17, 20, 21, 22, 23])
         i = 0
         for box in boxes:
-
             boxes[box] = []
-            boxes[box].append(tk.Label(box_frame, text = box))
+            boxes[box].append(tk.Label(box_frame, text = box, fg = 'green', font=("Helvetica", 15)))
             boxes[box].append(FloatEntry(box_frame))
 
-            boxes[box][0].grid(row = i // 8, column = i % 8)
-            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+            boxes[box][0].grid(row = i, column = 0)
+            boxes[box][1].grid(row = i, column= 1)
 
-            i += 2
+            i += 1
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4E',boxes))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
         box_frame.grid(row=1, column=0)
         action_frame.grid(row=2, column=0)
+
 
 
         return view
@@ -280,7 +283,7 @@ class View():
 
         
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T5: Statement of Investment Income").grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "T5: Statement of Investment Income", font=("Helvetica", 16)).grid(row = 0, column = 0, columnspan = 8)
         
         tk.Label(title_frame, text = "Name of payer").grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
@@ -293,25 +296,25 @@ class View():
         boxes = dict.fromkeys([24, 25, 26, 13, 18, 10, 11, 12])
         i = 0
         for box in boxes:
-
             boxes[box] = []
-            boxes[box].append(tk.Label(box_frame, text = box))
+            boxes[box].append(tk.Label(box_frame, text = box, fg = 'firebrick4', font=("Helvetica", 15)))
             boxes[box].append(FloatEntry(box_frame))
 
-            boxes[box][0].grid(row = i // 8, column = i % 8)
-            boxes[box][1].grid(row = i // 8, column= i % 8 + 1)
+            boxes[box][0].grid(row = i, column = 0)
+            boxes[box][1].grid(row = i, column= 1)
 
-            i += 2
+            i += 1
 
 
         action_frame = tk.Frame(view)
-        tk.Button(action_frame, text = "Clear",command=lambda: self.controller.clear(boxes)).grid(row=0, column=0, columnspan=4)
-        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T5',boxes))).grid(row=0, column=4, columnspan=4)
+        tk.Button(action_frame, text = "Clear", command=lambda: self.controller.clear(boxes), font=("Helvetica", 15)).grid(row=0, column=0, columnspan=4)
+        tk.Button(action_frame, text = "Submit", command=lambda: self.controller.submit(('T4',boxes), font=("Helvetica", 15))).grid(row=0, column=4, columnspan=4)
 
 
         title_frame.grid(row=0, column=0)
         box_frame.grid(row=1, column=0)
         action_frame.grid(row=2, column=0)
+
 
 
         return view
@@ -322,7 +325,7 @@ class View():
 
 
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "T2202: Tuition and Enrolment Certificate").grid(row = 0, column = 0, columnspan = 8)
+        tk.Label(title_frame, text = "T2202: Tuition and Enrolment Certificate", font=("Helvetica", 16)).grid(row = 0, column = 0, columnspan = 8)
         tk.Label(title_frame, text = "Institution name").grid(row = 1, column = 0, columnspan = 4)
         StrEntry(title_frame).grid(row = 1, column = 4, columnspan = 8)
 
@@ -330,25 +333,25 @@ class View():
         box_frame = tk.Frame(view)
         boxes = {}
         boxes["program"] = []
-        boxes["program"].append(tk.Label(box_frame, text = "Program name"))
+        boxes["program"].append(tk.Label(box_frame, text = "Program name", fg = 'dark slate blue', font=("Helvetica", 15)))
         boxes["program"].append(FloatEntry(box_frame))
         boxes["program"][0].grid(row = 0, column = 0)
         boxes["program"][1].grid(row = 1, column= 0)
 
         boxes["fees"] = []
-        boxes["fees"].append(tk.Label(box_frame, text = "Tuition fees"))
+        boxes["fees"].append(tk.Label(box_frame, text = "Tuition fees", fg = 'dark slate blue', font=("Helvetica", 15)))
         boxes["fees"].append(FloatEntry(box_frame))
         boxes["fees"][0].grid(row = 0, column = 1)
         boxes["fees"][1].grid(row = 1, column= 1)
 
         boxes["pt"] = []
-        boxes["pt"].append(tk.Label(box_frame, text = "Part-time months"))
+        boxes["pt"].append(tk.Label(box_frame, text = "Part-time months", fg = 'dark slate blue', font=("Helvetica", 15)))
         boxes["pt"].append(FloatEntry(box_frame))
         boxes["pt"][0].grid(row = 0, column = 2)
         boxes["pt"][1].grid(row = 1, column= 2)
 
         boxes["ft"] = []
-        boxes["ft"].append(tk.Label(box_frame, text = "Full-time months"))
+        boxes["ft"].append(tk.Label(box_frame, text = "Full-time months", fg = 'dark slate blue', font=("Helvetica", 15)))
         boxes["ft"].append(FloatEntry(box_frame))
         boxes["ft"][0].grid(row = 0, column = 3)
         boxes["ft"][1].grid(row = 1, column= 3)
@@ -371,14 +374,14 @@ class View():
 
         view = tk.Frame(root)
 
-        self.treeview = ttk.Treeview(view, columns=['slip', 'name'], selectmode='browse')
-        self.treeview.heading('#0', text='')
-        self.treeview.heading('slip', text='Tax Slip')
-        self.treeview.heading('name', text='Name')
-        self.treeview.grid(row=0,column=0)
+        treeview = ttk.Treeview(view, columns=['slip', 'name'], selectmode='browse')
+        treeview.heading('#0', text='')
+        treeview.heading('slip', text='Tax Slip')
+        treeview.heading('name', text='Name')
+        treeview.grid(row=0,column=0)
 
-        scrollbar = ttk.Scrollbar(view, orient=tk.VERTICAL, command=self.treeview.yview)
-        self.treeview.configure(yscrollcommand=scrollbar.set) 
+        scrollbar = ttk.Scrollbar(view, orient=tk.VERTICAL, command=treeview.yview)
+        treeview.configure(yscrollcommand=scrollbar.set) 
         scrollbar.grid(row=0, column=1, sticky='NSW')
 
         return view
@@ -397,7 +400,7 @@ class View():
         view = tk.Frame(root)
 
         title_frame = tk.Frame(view)
-        tk.Label(title_frame, text = "Calculate Return/Balance Owing").grid(row = 0, column = 0, columnspan=8)
+        tk.Label(title_frame, text = "Calculate Return/Balance Owing", font=("Helvetica", 16)).grid(row = 0, column = 0, columnspan=8)
         
         box_frame = tk.Frame(view)
         boxes = dict.fromkeys([10100, 11900, 15000, 23600, 30000, 35000, 48200, 48400])
@@ -409,9 +412,9 @@ class View():
         
         for box in boxes:
             boxes[box] = []
-            boxes[box].append(tk.Label(box_frame, text = box))
-            boxes[box].append(tk.Label(box_frame, text = labels[j]))
-            boxes[box].append(tk.Label(box_frame, textvariable = self.data[j]))
+            boxes[box].append(tk.Label(box_frame, text = box, fg = 'dark slate blue', font=("Helvetica", 15)))
+            boxes[box].append(tk.Label(box_frame, text = labels[j], fg = 'dark slate blue', font=("Helvetica", 15)))
+            boxes[box].append(tk.Label(box_frame, textvariable = self.data[j], fg = 'dark slate blue', font=("Helvetica", 15)))
             
 
             boxes[box][0].grid(row = i, column = 0)
@@ -436,16 +439,15 @@ class View():
 
     def get_returns(self):
         all_data = self.controller.calculate_return()
+
         j = 0 
         for line in self.data:
             line.set(all_data[j])
             j+= 1
-    
+
     def on_save(self):
         self.controller.save()
-        result = messagebox.showinfo(title = "Submitted", message = "Submitted to CSV file")
-        
-        
+        result = messagebox.showinfo(title = "Submitted", message = "Submitted to CSV file")   
         
 
     
