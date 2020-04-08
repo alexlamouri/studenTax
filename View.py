@@ -371,14 +371,14 @@ class View():
 
         view = tk.Frame(root)
 
-        treeview = ttk.Treeview(view, columns=['slip', 'name'], selectmode='browse')
-        treeview.heading('#0', text='')
-        treeview.heading('slip', text='Tax Slip')
-        treeview.heading('name', text='Name')
-        treeview.grid(row=0,column=0)
+        self.treeview = ttk.Treeview(view, columns=['slip', 'name'], selectmode='browse')
+        self.treeview.heading('#0', text='')
+        self.treeview.heading('slip', text='Tax Slip')
+        self.treeview.heading('name', text='Name')
+        self.treeview.grid(row=0,column=0)
 
-        scrollbar = ttk.Scrollbar(view, orient=tk.VERTICAL, command=treeview.yview)
-        treeview.configure(yscrollcommand=scrollbar.set) 
+        scrollbar = ttk.Scrollbar(view, orient=tk.VERTICAL, command=self.treeview.yview)
+        self.treeview.configure(yscrollcommand=scrollbar.set) 
         scrollbar.grid(row=0, column=1, sticky='NSW')
 
         return view

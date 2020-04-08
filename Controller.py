@@ -7,6 +7,7 @@ from tkinter import filedialog
 class Controller():
 
     def __init__(self):
+        self.num_slips = 0
 
         self.file = 'StudenTax.csv'
 
@@ -42,6 +43,11 @@ class Controller():
             data[line] = int(value)
         
         self.model.save_tax_slip(data,tax_slip)
+
+        self.view.treeview.insert('', 'end', iid=self.num_slips, text='', values=[tax_slip])
+        self.num_slips += 1
+
+        self.switch_view('list')
         
 
     def calculate_total_income(self):
